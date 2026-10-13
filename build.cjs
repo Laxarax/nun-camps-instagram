@@ -11,7 +11,7 @@ for(const [id,uri] of Object.entries(ctx.getCampPosters_())){
 }
 const logo=ctx.getLogoDataUri_(),[,type,data]=logo.match(/^data:image\/([^;]+);base64,(.*)$/s);
 fs.writeFileSync(path.join(site,'assets','logo.'+type),Buffer.from(data,'base64'));
-let html=fs.readFileSync(path.join(root,'Index.html'),'utf8').replace('<head>', '<head><title>Nün Academy | Camps</title><meta name="referrer" content="no-referrer">');
+let html=fs.readFileSync(path.join(root,'Index.html'),'utf8').replace('<head>', '<head><title>Nün Academy | Camps</title><meta name="viewport" content="width=device-width, initial-scale=1">');
 html=html.replace('<?!= logo ?>','./assets/logo.'+type).replace('<?!= campPosters ?>',JSON.stringify(posters)).replace('<?!= bootstrap ?>',`{page:new URLSearchParams(location.search).get('page')||'camps',id:new URLSearchParams(location.search).get('id')||'',key:new URLSearchParams(location.search).get('key')||''}`);
 const start=html.indexOf('  function call(name,args)'),end=html.indexOf('\n  function store',start);
 if(start<0||end<0)throw new Error('Registration adapter location changed.');
