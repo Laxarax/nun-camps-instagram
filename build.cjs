@@ -23,3 +23,6 @@ html=html.slice(0,start)+`  var google={script:{history:{replace:function(_,para
   }`+html.slice(end);
 fs.writeFileSync(path.join(site,'index.html'),html);
 console.log('Standalone mirror built.');
+
+const mealHtml=fs.readFileSync(path.join(root,'GirlsMeal.html'),'utf8').replace('<?!= logo ?>','./assets/logo.'+type).replace('<?!= bootstrap ?>',`{id:new URLSearchParams(location.search).get('id')||'',key:new URLSearchParams(location.search).get('key')||''}`);
+fs.writeFileSync(path.join(site,'meal.html'),mealHtml);
